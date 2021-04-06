@@ -24,7 +24,6 @@ class DataLoader:
         else:
             corpus_file = open(self.opt.dataroot)
             lines = corpus_file.readlines()
-            # random.Random(RANDOM_SEED).shuffle(lines)       # shuffle data
             for line in lines:
                 space_split = line.split(' ', 3)  # split 3 spaces
                 self.topic_labels.append(TOPIC_LABEL.index(space_split[0]))
