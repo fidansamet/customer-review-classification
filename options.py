@@ -8,6 +8,7 @@ class Options():
         parser.add_argument('--phase', type=str, default='train', help='train or test phase')
         parser.add_argument('--name', type=str, default='knn', help='name of the experiment')
         parser.add_argument('--category', type=str, default='sentiment', help='which category will classifier use')
+        parser.add_argument('--feature', type=str, default='unigram', help='which feature will classifier use')
 
         self.parser = parser
         return parser
