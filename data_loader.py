@@ -25,7 +25,7 @@ class DataLoader:
             corpus_file = open(self.opt.dataroot)
             lines = corpus_file.readlines()
             for line in lines:
-                space_split = line.split(' ', 3)  # split 3 spaces
+                space_split = line.strip().split(' ', 3)  # split 3 spaces
                 self.topic_labels.append(TOPIC_LABEL.index(space_split[0]))
                 self.sentiment_labels.append(SENTIMENT_LABEL.index(space_split[1]))
                 self.reviews.append(space_split[3])

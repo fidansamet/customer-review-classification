@@ -17,7 +17,7 @@ class NaiveBayesClassifier:
         self.bow = {label: {} for label in self.classes}  # create empty dictionary for words belonging to classes
 
         for review, label in zip(X_train, y_train):
-            words = review.strip().split(' ')
+            words = review.split(' ')
             for i in range(len(words)):
                 if self.opt.feature == 'unigram':
                     ngram = words[i].lower()
@@ -51,7 +51,7 @@ class NaiveBayesClassifier:
                 self.log_likelihood[label][word] = self.calc_log_likelihood(word_occ, self.class_occ[label])  # P(wi|y)
 
     def predict(self, test_sample):
-        words = test_sample.strip().split(' ')
+        words = test_sample.split(' ')
         votes = {label: 0 for label in self.classes}
 
         for label in self.classes:
