@@ -9,6 +9,8 @@ class Options():
         parser.add_argument('--name', type=str, default='knn', help='name of the experiment')
         parser.add_argument('--category', type=str, default='sentiment', help='which category will classifier use')
         parser.add_argument('--feature', type=str, default='unigram', help='which feature will classifier use')
+        parser.add_argument('--discard_punct', action='store_true', help='if specified, discard punctuations')
+        parser.add_argument('--discard_sw', action='store_true', help='if specified, discard stop words')
 
         self.parser = parser
         return parser
