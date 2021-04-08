@@ -1,3 +1,5 @@
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
+from string import punctuation
 import numpy as np
 
 
@@ -10,15 +12,24 @@ class NaiveBayesClassifier:
         self.log_prior, self.log_likelihood = {}, {}
 
     def calc_log_likelihood(self, word_occ, total_occ):
-        return np.log((word_occ + self.alpha) / (total_occ + self.alpha * len(self.vocab)))  # TODO: vocab?
+        return np.log((word_occ + self.alpha) / (total_occ + self.alpha * len(self.vocab)))
+
+    def process_review(self, string):
+        if self.opt.discard_punct:
+            for punct in punctuation:
+                string = string.replace(punct, '')
+        return string.split()
 
     def init_bow(self, X_train, y_train):
         self.classes, self.class_count = np.unique(y_train, return_counts=True)  # calculate review numbers of classes
         self.bow = {label: {} for label in self.classes}  # create empty dictionary for words belonging to classes
 
         for review, label in zip(X_train, y_train):
-            words = review.split(' ')
+            words = self.process_review(review)
             for i in range(len(words)):
+                if self.opt.discard_sw and words[i].lower() in ENGLISH_STOP_WORDS:
+                    continue
+
                 if self.opt.feature == 'unigram':
                     ngram = words[i].lower()
                 else:  # bigram
@@ -31,7 +42,6 @@ class NaiveBayesClassifier:
                 else:
                     self.bow[label][ngram] += 1  # increase the count of current word in current class
 
-                # TODO: search or current word?
                 if ngram not in self.vocab:
                     self.vocab.add(ngram)  # update vocabulary
 
@@ -51,7 +61,7 @@ class NaiveBayesClassifier:
                 self.log_likelihood[label][word] = self.calc_log_likelihood(word_occ, self.class_occ[label])  # P(wi|y)
 
     def predict(self, test_sample):
-        words = test_sample.split(' ')
+        words = self.process_review(test_sample)
         votes = {label: 0 for label in self.classes}
 
         for label in self.classes:
