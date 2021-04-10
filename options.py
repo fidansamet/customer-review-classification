@@ -11,6 +11,8 @@ class Options():
         parser.add_argument('--feature', type=str, default='unigram', help='which feature will classifier use')
         parser.add_argument('--discard_punct', action='store_true', help='if specified, discard punctuations')
         parser.add_argument('--discard_sw', action='store_true', help='if specified, discard stop words')
+        parser.add_argument('--tfidf', action='store_true',
+                            help='if specified, use TF-IDF for sentiment classification (only for unigram)')
 
         self.parser = parser
         return parser

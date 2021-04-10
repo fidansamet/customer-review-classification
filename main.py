@@ -20,10 +20,11 @@ def test(classifier, X_test, y_test, write_file=False):
         trues.append(label)
         preds.append(pred)
 
-        if pred == label:
+        if pred == label:  # correct classification
             correct_classified += 1
+
         if write_file is True:
-            row_list.append([len(row_list) + 1, pred])  # TODO: pred?
+            row_list.append([len(row_list) + 1, pred])
 
     acc = 100 * (correct_classified / len(X_test))  # calculate the accuracy
 
@@ -57,7 +58,7 @@ def plot_conf_matrix(true, pred):
 
 if __name__ == '__main__':
     opt = Options().parse()
-    data_loader = DataLoader(opt)
-    nb_classifier = NaiveBayesClassifier(opt)
-    nb_classifier.train(data_loader.X_train, data_loader.y_train)
-    test(nb_classifier, data_loader.X_test, data_loader.y_test)
+    data_loader = DataLoader(opt)  # load data
+    nb_classifier = NaiveBayesClassifier(opt)  # create Naive Bayes classifier
+    nb_classifier.train(data_loader.X_train, data_loader.y_train)  # train classifier
+    test(nb_classifier, data_loader.X_test, data_loader.y_test)  # test classifier
