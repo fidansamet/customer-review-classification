@@ -30,11 +30,27 @@ class DataLoader:
                 self.sentiment_labels.append(SENTIMENT_LABEL.index(space_split[1]))
                 self.reviews.append(space_split[3])
 
+    def load_test(self):
+        if not os.path.exists(self.opt.test_path):
+            print("No data found in " + self.opt.test_path)
+            sys.exit()
+        else:
+            corpus_file = open(self.opt.test_path)
+            lines = corpus_file.readlines()
+            for row in lines:
+                split = row.strip().split(',', 1)
+                self.X_test.append(split[1])
+
     def split_train_test_data(self):
         if self.opt.category == 'sentiment':
-            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.reviews, self.sentiment_labels,
-                                                                                    test_size=TEST_SPLIT,
-                                                                                    random_state=RANDOM_SEED)
+            if self.opt.phase == 'train':
+                self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.reviews,
+                                                                                        self.sentiment_labels,
+                                                                                        test_size=TEST_SPLIT,
+                                                                                        random_state=RANDOM_SEED)
+            else:
+                self.load_test()
+                self.X_train, self.y_train = self.reviews, self.sentiment_labels
 
         else:  # topic category
             self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.reviews, self.topic_labels,

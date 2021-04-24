@@ -9,11 +9,11 @@ import time
 import csv
 
 
-def test(classifier, X_test, y_test, write_file=False):
-    print("Test started")
+def validate(classifier, X_test, y_test):
+    print("Validation started")
     time_start = time.clock()
     correct_classified = 0
-    row_list, trues, preds = [], [], []
+    trues, preds = [], []
 
     for review, label in zip(X_test, y_test):
         pred = classifier.predict(review)
@@ -23,9 +23,6 @@ def test(classifier, X_test, y_test, write_file=False):
         if pred == label:  # correct classification
             correct_classified += 1
 
-        if write_file is True:
-            row_list.append([len(row_list) + 1, pred])
-
     acc = 100 * (correct_classified / len(X_test))  # calculate the accuracy
 
     print("%d/%d samples are correctly classified - Accuracy: %0.2f" % (correct_classified, len(y_test), acc))
@@ -34,12 +31,25 @@ def test(classifier, X_test, y_test, write_file=False):
 
     plot_conf_matrix(trues, preds)
 
+
+def test(classifier, X_test):
+    print("Test started")
+    time_start = time.clock()
+    row_list, preds = [], []
+
+    for review in X_test:
+        pred = classifier.predict(review)
+        preds.append(pred)
+
+        row_list.append([len(row_list), SENTIMENT_LABEL[pred]])
+
+    print("Computation time: %0.2f second(s)" % (time.clock() - time_start))
+    print("-------------------")
+
     with open('predictions.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["Id", "Category"])
         writer.writerows(row_list)
-
-    return acc, row_list, trues, preds
 
 
 def plot_conf_matrix(true, pred):
@@ -61,4 +71,7 @@ if __name__ == '__main__':
     data_loader = DataLoader(opt)  # load data
     nb_classifier = NaiveBayesClassifier(opt)  # create Naive Bayes classifier
     nb_classifier.train(data_loader.X_train, data_loader.y_train)  # train classifier
-    test(nb_classifier, data_loader.X_test, data_loader.y_test)  # test classifier
+    if opt.phase == 'train':
+        validate(nb_classifier, data_loader.X_test, data_loader.y_test)  # test classifier
+    else:
+        test(nb_classifier, data_loader.X_test)  # test classifier

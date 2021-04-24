@@ -5,6 +5,7 @@ class Options():
     def initialize(self, parser):
         parser.add_argument('--dataroot', type=str, default='./datasets/all_sentiment_shuffled.txt',
                             help='path to dataset')
+        parser.add_argument('--test_path', type=str, default='./datasets/data_wlabel.csv', help='path to dataset')
         parser.add_argument('--phase', type=str, default='train', help='train or test phase')
         parser.add_argument('--name', type=str, default='knn', help='name of the experiment')
         parser.add_argument('--category', type=str, default='sentiment', help='which category will classifier use')
@@ -13,6 +14,7 @@ class Options():
         parser.add_argument('--discard_sw', action='store_true', help='if specified, discard stop words')
         parser.add_argument('--tfidf', action='store_true',
                             help='if specified, use TF-IDF for sentiment classification (only for unigram)')
+        parser.add_argument('--lemma', action='store_true', help='if specified, use lemmatisation')
 
         self.parser = parser
         return parser

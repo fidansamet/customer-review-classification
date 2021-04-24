@@ -2,12 +2,14 @@ from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS, CountVectorizer,
 from sklearn.pipeline import Pipeline
 from string import punctuation
 import numpy as np
+import spacy
 
 
 class NaiveBayesClassifier:
     def __init__(self, opt):
         self.opt = opt
         self.alpha = 1
+        self.nlp = spacy.load('en_core_web_sm')
         self.vocab = set()
         self.bow, class_occ = {}, {}
         self.log_prior, self.log_likelihood = {}, {}
@@ -20,6 +22,8 @@ class NaiveBayesClassifier:
         if self.opt.discard_punct:  # if specified remove punctuations
             for punct in punctuation:
                 string = string.replace(punct, '')
+        if self.opt.lemma:
+            return [elm.lemma_ for elm in self.nlp(string)]
         return string.split()
 
     def inverse_document_frequency(self):
