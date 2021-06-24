@@ -112,7 +112,7 @@ After training, I follow the below steps for testing.
 
 Below tables are test accuracies of Naive Bayes classifier using unigram and bigram features. The vanilla models are the models that no data pre-processing is done. They are indeed the best ones. I also test the model by removing punctuations, stop words, and both punctuations and stop words. The decrease in accuracy shows that they are helpful in the model. For instance, removing stop words has a direct effect on bigram. Because it interferes two adjacent words and this effects the probabilities directly. I also used TF-IDF scores, too. The performance of bigram feature is better than unigram feature. Usually, bigram is better than unigram. Because it stores more general information than just individual words. By considering two adjacent words, it considers more accurate tokens to make predictions. Therefore bigram feature is my choice in sentiment category classification.
 
-**Unigram**
+### Unigram
 
 | Model | Accuracy |
 | :- | -: |
@@ -123,7 +123,7 @@ Below tables are test accuracies of Naive Bayes classifier using unigram and big
 | w/ TF-IDF | 60.54 |
 
 
-**Bigram**
+### Bigram
 
 | Model | Accuracy |
 | :- | -: |
@@ -142,7 +142,7 @@ Below is the confusion matrix of the best model obtained **86.57** test accuracy
 
 I also implemented a classifier that predicts the topic category label instead of sentiment category label. My implementation can be adapted to any text category label classification problem. Below are the test accuracies I obtained from several models.
 
-**Unigram**
+### Unigram
 
 | Model | Accuracy |
 | :- | -: |
@@ -153,7 +153,7 @@ I also implemented a classifier that predicts the topic category label instead o
 | w/ TF-IDF | 62.33 |
 
 
-**Bigram**
+### Bigram
 
 | Model | Accuracy |
 | :- | -: |
