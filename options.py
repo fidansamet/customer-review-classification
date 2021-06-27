@@ -8,8 +8,8 @@ class Options():
         parser.add_argument('--test_path', type=str, default='./datasets/data_wlabel.csv', help='path to dataset')
         parser.add_argument('--phase', type=str, default='train', help='train or test phase')
         parser.add_argument('--name', type=str, default='knn', help='name of the experiment')
-        parser.add_argument('--category', type=str, default='sentiment', help='which category will classifier use')
-        parser.add_argument('--feature', type=str, default='unigram', help='which feature will classifier use')
+        parser.add_argument('--category', type=str, default='sentiment', help='which category will classifier use: sentiment | topic')
+        parser.add_argument('--feature', type=str, default='unigram', help='which feature will classifier use: unigram | bigram')
         parser.add_argument('--discard_punct', action='store_true', help='if specified, discard punctuations')
         parser.add_argument('--discard_sw', action='store_true', help='if specified, discard stop words')
         parser.add_argument('--tfidf', action='store_true',
