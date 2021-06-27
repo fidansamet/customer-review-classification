@@ -2,6 +2,18 @@
 
 This repository contains the implementation of Naive Bayes algorithm to classify customer reviews from the words in the review. My classification method can be adapted to any text label. However, I mainly focus on positive/negative and topic classification tasks.
 
+## Run
+
+### Train
+
+    python main.py
+
+### Test
+
+    python main.py --phase test
+
+For more options, please refer to options.py
+
 
 ## Dataset
 
